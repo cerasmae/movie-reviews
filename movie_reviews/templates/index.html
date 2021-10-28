@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles%}
+<link href="{% static 'css/landing.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div id="articles" class="container mt-4">
+    {% include 'article.html' %}
+
+    {% include 'create_modal.html' %}
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'js/app.j' %}"></script>
+{% endblock %}

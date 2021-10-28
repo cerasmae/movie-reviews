@@ -1,0 +1,42 @@
+<div
+  class="modal fade"
+  id="createFolderModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="createFolderModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Folder</h5>
+      </div>
+      <div class="modal-body">
+        <form
+          class="form"
+          method="POST"
+          id="createFolder"
+        >
+          {% csrf_token %}
+          <!-- <div id="createFolderAlert" class="alert alert-danger" role="alert">
+            Error message
+          </div> -->
+          <label class="form-label" for="name">Folder Name:</label>
+          <input id="folderName" class="form-control" type="text" name="name">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="createFolderFunc()"
+        >Create</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

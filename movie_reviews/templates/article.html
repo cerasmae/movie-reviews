@@ -1,0 +1,96 @@
+{% for article in articles %}
+<div class="card mb-2">
+  <img src="{{ article.multimedia.src }}">
+  <div class="card-body">
+    <h3>
+      <a href="{{article.link.url}}" target="_blank">
+      {{ article.headline }}</a>
+    </h3>
+    <p>{{article.summary_short}}</p>
+    <h4>By {{article.byline}}</h4>
+
+    {% if user.is_authenticated %}
+      <form
+        class="form"
+        method="POST"
+        id="bookmarkForm{{ forloop.counter0|add:counter }}"
+      >
+        {% csrf_token %}
+
+        <input
+          type="text"
+          name="link"
+          value="{{ article.link.url }}"
+          hidden
+        >
+        <input
+          type="text"
+          name="suggestedText"
+          value="{{ article.headline }}"
+          hidden
+        >
+        <input
+          type="text"
+          name="byline"
+          value="{{ article.byline }}"
+          hidden
+        >
+
+        {% if article.bookmark_id %}
+          <input
+            type="text"
+            name="bookmarkId"
+            value="{{ article.bookmark_id }}"
+            hidden
+          >
+
+          <div class="dropdown" id="dropdownDiv{{ forloop.counter0|add:counter }}">
+            <button
+              class="btn btn-danger mt-4"
+              type="button"
+              id="removeButton{{ forloop.counter0 }}"
+              onclick="deleteBookmark(this, {{ forloop.counter0 }})"
+            >
+              Remove Bookmark
+              <i class="bi bi-lg bi-bookmark-x"></i>
+            </button>
+          </div>
+        {% else %}
+          <div class="dropdown" id="dropdownDiv{{ forloop.counter0|add:counter }}">
+            <button
+              class="btn btn-primary mt-4 dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton{{ forloop.counter0|add:counter }}"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              onclick="getFolders(this, {{forloop.counter0|add:counter}})"
+            >
+              Bookmark
+              <i class="bi bi-lg bi-bookmark-plus"></i>
+            </button>
+            <div
+              id="folderDropdown{{ forloop.counter0|add:counter }}"
+              class="dropdown-menu"
+              aria-labelledby="folderDropdownButton"
+            >
+            </div>
+          </div>
+        {% endif %}
+      </form>
+    {% endif%}
+  </div>
+</div>
+{% endfor %}
+
+<div id="loadMoreButton" class="text-center">
+  {% if search %}
+    <button class="btn btn-primary btn-lg mt-4" onclick="loadSearchArticles()">
+      Load More
+    </button>
+  {% else %}
+    <button class="btn btn-primary btn-lg mt-4" onclick="loadMoreArticles()">
+      Load More
+    </button>
+  {% endif %}
+</div>
